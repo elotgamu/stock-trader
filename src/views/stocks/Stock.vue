@@ -6,7 +6,10 @@
         <small>(Price: ${{ stock.price }})</small>
       </div>
       <div class="panel-body">
-        <div class="pull-left" :class="{'has-error': insufficientFunds}">
+        <div
+          class="pull-left"
+          :class="{ 'has-error': insufficientFunds || quantity < 0 }"
+        >
           <input
             type="number"
             class="form-control"
@@ -18,10 +21,14 @@
           <button
             type="button"
             class="btn btn-success"
-            :class="{'btn-danger': insufficientFunds}"
+            :class="{ 'btn-danger': insufficientFunds }"
             v-on:click="buyStock"
-            :disabled="insufficientFunds ||  quantity <= 0 || !Number.isInteger(quantity)"
-          >{{ insufficientFunds ? 'Insufficient Funds' : 'Buy'}}</button>
+            :disabled="
+              insufficientFunds || quantity <= 0 || !Number.isInteger(quantity)
+            "
+          >
+            {{ insufficientFunds ? "Insufficient Funds" : "Buy" }}
+          </button>
         </div>
       </div>
     </div>

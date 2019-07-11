@@ -29,13 +29,19 @@
           </router-link>
         </ul>
 
-        <strong class="navbar-text navbar-right">Funds: {{ funds | currency }}</strong>
+        <strong class="navbar-text navbar-right">
+          Funds: {{ funds | currency }}
+        </strong>
 
         <ul class="nav navbar-nav navbar-right">
           <li>
-            <a href="#">End Day</a>
+            <a href="#" @click="endDay">End Day</a>
           </li>
-          <li class="dropdown">
+          <li
+            class="dropdown"
+            :class="{ open: isDropDownOpen }"
+            @click="toggleDropDown"
+          >
             <a
               href="#"
               class="dropdown-toggle"
@@ -66,13 +72,25 @@
 
 <script>
 export default {
+  data() {
+    return {
+      isDropDownOpen: false
+    };
+  },
   computed: {
     funds() {
       return this.$store.state.portfolio.funds;
+    }
+  },
+  methods: {
+    toggleDropDown() {
+      this.isDropDownOpen = !this.isDropDownOpen;
+    },
+    endDay() {
+      this.$store.dispatch("stocks/randomizeStocks");
     }
   }
 };
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>
