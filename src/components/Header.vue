@@ -55,10 +55,10 @@
             </a>
             <ul class="dropdown-menu">
               <li>
-                <a href="#">Load Data</a>
+                <a href="#" v-on:click="loadData">Load Data</a>
               </li>
               <li>
-                <a href="#">Save Data</a>
+                <a href="#" v-on:click="saveData">Save Data</a>
               </li>
             </ul>
           </li>
@@ -71,6 +71,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   data() {
     return {
@@ -88,9 +89,19 @@ export default {
     },
     endDay() {
       this.$store.dispatch("stocks/randomizeStocks");
+    },
+    saveData() {
+      const data= {
+        funds: this.funds,
+        stockPortfolio: this.$store.getters["portfolio/stockPortfolio"],
+        stocks: this.$store.state.stocks.stocks
+      }
+      axios.put(process.env.VUE_APP_API_URL + '/data.json', data);
+    },
+    loadData() {
+      this.$store.dispatch("loadStockData");
     }
   }
 };
 </script>
-
 <style lang="scss" scoped></style>
