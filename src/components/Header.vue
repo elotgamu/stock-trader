@@ -9,6 +9,7 @@
           data-toggle="collapse"
           data-target="#bs-example-navbar-collapse-1"
           aria-expanded="false"
+          v-on:click="toggleMobileMenu"
         >
           <span class="sr-only">Toggle navigation</span>
           <span class="icon-bar"></span>
@@ -19,7 +20,11 @@
       </div>
 
       <!-- Collect the nav links, forms, and other content for toggling -->
-      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <div
+        class="collapse navbar-collapse"
+        id="bs-example-navbar-collapse-1"
+        :class="{ in: isMobileMenuOpen }"
+      >
         <ul class="nav navbar-nav">
           <router-link to="/portfolio" tag="li">
             <a>Portfolio</a>
@@ -71,11 +76,12 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from "axios";
 export default {
   data() {
     return {
-      isDropDownOpen: false
+      isDropDownOpen: false,
+      isMobileMenuOpen: false
     };
   },
   computed: {
@@ -84,6 +90,9 @@ export default {
     }
   },
   methods: {
+    toggleMobileMenu() {
+      this.isMobileMenuOpen = !this.isMobileMenuOpen;
+    },
     toggleDropDown() {
       this.isDropDownOpen = !this.isDropDownOpen;
     },
@@ -91,12 +100,12 @@ export default {
       this.$store.dispatch("stocks/randomizeStocks");
     },
     saveData() {
-      const data= {
+      const data = {
         funds: this.funds,
         stockPortfolio: this.$store.getters["portfolio/stockPortfolio"],
         stocks: this.$store.state.stocks.stocks
-      }
-      axios.put(process.env.VUE_APP_API_URL + '/data.json', data);
+      };
+      axios.put(process.env.VUE_APP_API_URL + "/data.json", data);
     },
     loadData() {
       this.$store.dispatch("loadStockData");

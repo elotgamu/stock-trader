@@ -3,10 +3,12 @@
     <div class="panel panel-info">
       <div class="panel-heading">
         <h3 class="panel-title">{{ stock.name }}</h3>
-        <small>(Price: ${{ stock.price }} | Quantity: {{stock.quantity}})</small>
+        <small
+          >(Price: ${{ stock.price }} | Quantity: {{ stock.quantity }})</small
+        >
       </div>
       <div class="panel-body">
-        <div class="pull-left" :class="{'has-error': insufficientQuantity}">
+        <div class="pull-left" :class="{ 'has-error': insufficientQuantity }">
           <input
             type="number"
             class="form-control"
@@ -19,8 +21,14 @@
             type="button"
             class="btn btn-success"
             v-on:click="sellStocks"
-            :disabled="insufficientQuantity || quantity <= 0 || !Number.isInteger(quantity)"
-          >{{ insufficientQuantity ? 'Not enough stocks' : 'Sell' }}</button>
+            :disabled="
+              insufficientQuantity ||
+                quantity <= 0 ||
+                !Number.isInteger(quantity)
+            "
+          >
+            {{ insufficientQuantity ? "Not enough stocks" : "Sell" }}
+          </button>
         </div>
       </div>
     </div>
